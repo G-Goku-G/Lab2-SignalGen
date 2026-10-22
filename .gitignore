@@ -1,3 +1,4 @@
 .DS_Store
 *.vcd
-/obj__dir
+*/obj__dir
+task1/obj__dir
