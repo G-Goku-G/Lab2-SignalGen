@@ -14,4 +14,4 @@ verilator -Wall --cc --trace sinegen.sv counter.sv rom.sv --exe sinegen_tb.cpp
 make -j -C obj_dir/ -f Vsinegen.mk Vsinegen
 
 # run executable simualation file
-obj_dir/Vtop
+obj_dir/Vsinegen
