@@ -25,7 +25,8 @@ int main(int argc, char **argv, char **env){
     top->clk = 1;
     top->rst = 0;
     top->en = 0;
-    top->incr = vbdValue();
+    top->incr = 1;
+    top->phase = vbdValue();
 
     //the simulation loop
     for (i = 0; i < MAX_SIM_CYC; i++){
@@ -35,14 +36,14 @@ int main(int argc, char **argv, char **env){
             top->clk = !top->clk;
             top->eval();
         }
-
-        vbdPlot(int(top->dout),0,255);
+        vbdPlot(int(top->dout1),0,255);
+        vbdPlot(int(top->dout2),0,255);
+        
 
         top->en = (i > 2);
-        top->incr = vbdValue();
-        if (vbdValue() == 0){
-            top->incr = 1;
-        }
+        top->phase = vbdValue();
+
+        vbdCycle(i+1);
         if (Verilated::gotFinish() || (vbdGetkey()=='q')) exit(0);
 
     }
