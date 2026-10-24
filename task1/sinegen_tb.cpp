@@ -1,7 +1,9 @@
 #include "Vsinegen.h"
 #include "verilated.h"
 #include "verilated_vcd_c.h"
+
 #include "vbuddy.cpp"
+#define MAX_SIM_CYC 1000000
 
 int main(int argc, char **argv, char **env){
     int i;
@@ -26,7 +28,7 @@ int main(int argc, char **argv, char **env){
     top->incr = 1;
 
     //the simulation loop
-    for (i = 0; i < 300; i++){
+    for (i = 0; i < MAX_SIM_CYC; i++){
         //dump the variables into VCD file and toggle clock
         for (clk = 0; clk < 2; clk++){
             tfp->dump(2*i + clk);
@@ -37,7 +39,7 @@ int main(int argc, char **argv, char **env){
         vbdPlot(int(top->dout),0,255);
 
         top->en = (i > 2);
-        if (Verilated::gotFinish()) exit(0);
+        if (Verilated::gotFinish() || (vbdGetkey()=='q')) exit(0);
 
     }
     vbdClose();
